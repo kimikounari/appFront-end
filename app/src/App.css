@@ -1,0 +1,270 @@
+.hide {
+  display: none;
+}
+
+.login-area,
+.signup-area {
+  margin-top: 100px;
+}
+
+.login-text-input,
+.login-password-input,
+.login-button,
+.signup-redirect-text,
+.signup-text-input,
+.signup-password-input,
+.signup-button,
+.login-redirect-text {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.login-text-input,
+.login-password-input,
+.signup-text-input,
+.signup-password-input {
+  width: 450px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.login-button,
+.signup-button {
+  width: 150px;
+  height: 50px;
+  background-color: blue;
+  border: none;
+  color: white;
+  margin-top: 20px;
+}
+
+.communication-message {
+  width: 450px;
+  margin: 10px auto;
+  color: red;
+  text-align: center;
+}
+
+.communication-style {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(250, 250, 250);
+  z-index: 2;
+}
+
+.chat-area {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  min-height: 100vh;
+  width: 400px;
+  background-color: rgba(240, 240, 240, 0.5);
+  z-index: 10;
+  padding-top: 40px;
+}
+
+.send-area {
+  position: absolute;
+  bottom: 3px;
+  right: 0px;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  margin-bottom: 50px;
+}
+
+.send-field {
+  width: 300px;
+  height: 25px;
+}
+
+.send-btn {
+  width: 50px;
+}
+
+.bottom-navi {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  position: fixed;
+  bottom: 0px;
+  overflow-x: auto;
+  z-index: 100;
+}
+
+.exit-button {
+  height: 58px;
+  margin: 0px 20px;
+  width: 150px;
+}
+
+.exit-button-text {
+  display: block;
+  color: white;
+  font-size: 20px;
+  width: 150px;
+  text-align: center;
+  margin: 0px;
+}
+
+.active_false {
+  display: none;
+}
+
+.active {
+  width: 150px;
+  text-align: center;
+  margin: 0px 20px;
+  font-size: 20px;
+  color: white;
+}
+
+.text_mute_status {
+  margin: 0px;
+}
+
+.video-start-icon {
+  display: block;
+  color: white;
+  text-align: center;
+  margin: 0px auto;
+  font-size: 20px;
+  height: 20px;
+}
+
+.video-chat-start-btn {
+  height: 58px;
+  margin: 0px 20px;
+  width: 150px;
+}
+
+.video-chat-start-text {
+  display: block;
+  color: white;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.icon {
+  display: block;
+  margin: 0 auto;
+  color: white;
+  font-size: 20px;
+}
+
+.chat-area-status-text {
+  width: 100%;
+  color: white;
+  margin: 0px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.chat-area-status-btn {
+  z-index: 5;
+  width: 150px;
+}
+
+.chat-area-close-text {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  z-index: 20;
+}
+
+.message {
+  height: 700px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.user-logged-in {
+  position: fixed;
+  top: 3px;
+  left: 1px;
+  color: white;
+  z-index: 10;
+}
+
+.user-logged-in p {
+  margin: 0px;
+}
+
+.video-chat-wrap {
+  width: 100%;
+  position: fixed;
+  top: 5px;
+  z-index: 3;
+  overflow-x: auto;
+}
+
+#video-wrap {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+
+.video-menu {
+  position: fixed;
+  top: 3px;
+  right: 3px;
+}
+
+.video-chat-display-btn {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+
+#video-user-name {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 50px;
+}
+
+span {
+  display: block;
+  height: 50px;
+  min-width: 250px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 140px;
+}
+
+video {
+  display: block;
+  width: 250px;
+}
+
+@media screen and (max-width: 460px) {
+
+  .login-text-input,
+  .login-password-input,
+  .signup-text-input,
+  .signup-password-input {
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+
+
+@media screen and (max-width: 650px) {
+  .bottom-navi {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 312px) {
+  video {
+    width: 100%;
+  }
+}
