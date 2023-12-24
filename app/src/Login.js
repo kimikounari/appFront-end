@@ -22,7 +22,7 @@ const Login = ({ setLoginUserInfo }) => {
             //const response = await axios.post('https://django-login-yggs.onrender.com/api/custom-model/', {
 
             //開発用コード
-            const response = await axios.post('http://127.0.0.1:8080/api/custom-model/', {
+            const response = await axios.post(process.env.REACT_APP_SIGN_API_URL, {
                 name: name,
                 _password: password,
                 avatart_number: avatar_number
@@ -53,7 +53,7 @@ const Login = ({ setLoginUserInfo }) => {
             //const response = await axios.post('https://django-login-yggs.onrender.com/api/get-name-and-id/', {
 
             //開発用コード
-            const response = await axios.post('http://127.0.0.1:8080/api/get-name-and-id/', {
+            const response = await axios.post(process.env.REACT_APP_LOGIN_API_URL, {
                 _password: loginPass,
                 name: name
             });

@@ -4,9 +4,10 @@ import './App.css';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo } from "@fortawesome/free-solid-svg-icons"
+import config from './config'
 const VideoChat = (props) => {
     const roomid = "56564";
-    const socket = io(process.env.REACT_APP_VIDEO_SOCKET_URL);
+    const socket = io(config.REACT_APP_VIDEO_SOCKET_URL);
     let myPeer;
     const myVideo = document.createElement('video');
     myVideo.muted = true;

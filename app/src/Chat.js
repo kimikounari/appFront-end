@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import config from './config'
 let socket;
 export const Chat = (props) => {
   const componentRef = useRef(null);
@@ -13,7 +14,7 @@ export const Chat = (props) => {
   const { loginUserInfo } = props;
   const [allUsers, setAllUsers] = useState([]);
   useEffect(() => {
-    socket = io(process.env.REACT_APP_CHAT_SOCKET_URL);
+    socket = io(config.REACT_APP_CHAT_SOCKET_URL);
     socket.on('connect', () => {
 
       socket.emit('userInfo', loginUserInfo);

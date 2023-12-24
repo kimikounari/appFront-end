@@ -5,10 +5,10 @@ import io from 'socket.io-client';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons"
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons"
-
+import config from './config'
 const Audiochat = () => {
   const roomid = "11435";
-  const socket = io(process.env.REACT_APP_AUDIO_SOCKET_URL);
+  const socket = io(config.REACT_APP_AUDIO_SOCKET_URL);
   let myPeer;
   const myVideo = document.createElement('video');
   myVideo.muted = true;
