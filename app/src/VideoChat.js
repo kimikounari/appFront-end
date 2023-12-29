@@ -24,7 +24,6 @@ const VideoChat = (props) => {
         const call = myPeer.call(userId, stream);
         const video = document.createElement('video');
         call.on("stream", (userVideoStream) => {
-            console.log('新しいユーザーのビデを表示');
             addVideoStresm(video, userVideoStream);
         });
         call.on("close", () => {
@@ -73,7 +72,6 @@ const VideoChat = (props) => {
                 myVideoStream = stream;
                 addVideoStresm(myVideo, stream);
                 myPeer.on("call", (call) => {
-                    console.log("Received a call from:", call.peer);
                     call.answer(stream);
                     const video = document.createElement("video");
                     call.on("stream", userVideoStream => {

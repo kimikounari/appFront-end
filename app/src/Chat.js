@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faUsersViewfinder } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import config from './config'
 let socket;
 export const Chat = (props) => {
@@ -13,6 +15,12 @@ export const Chat = (props) => {
   const [receivechatmessage, receivechatmessageSet] = useState([]);
   const { loginUserInfo } = props;
   const [allUsers, setAllUsers] = useState([]);
+  const [participantDisplay, setParticipantDisplay] = useState(false);
+  const avatars = [
+    '/DefaultAvatar.png',  // 例: public/DefaultAvatar.png
+    '/character_one.png'   // 例: public/AnotherAvatar.png
+  ];
+
   useEffect(() => {
     socket = io(config.REACT_APP_CHAT_SOCKET_URL);
     socket.on('connect', () => {
@@ -21,12 +29,15 @@ export const Chat = (props) => {
     });
 
     socket.on('allUsersInfo', (usersInfo) => {
-      console.log('Received all users info:', usersInfo);
       setAllUsers(usersInfo);
     });
 
+    socket.on('userDisconnected', (disconnectedUserId) => {
+      window.location.reload();
+    });
+
     socket.on('otherUserInfo', (otherUserInfo) => {
-      console.log('Other User Info:', otherUserInfo);
+
     });
     socket.on('chatMessage', (msg) => {
       receivechatmessageSet((prevItems) => [...prevItems, msg]);
@@ -43,7 +54,7 @@ export const Chat = (props) => {
   }, [loginUserInfo]);
 
   const chatmessageSend = (e) => {
-    socket.emit('chatMessage', loginUserInfo.name + ':' + chatmessage);
+    socket.emit('chatMessage', loginUserInfo.username + ':' + chatmessage);
   };
 
   const chatmessageUpdate = (e) => {
@@ -56,15 +67,29 @@ export const Chat = (props) => {
     setChatAreaStatus(!chatAreaStatus);
   }
 
+  const participantHandle = () => {
+    setParticipantDisplay(prevState => !prevState);
+  }
+
   return (
     <div>
       {/* TODO:接続してるユーザーの名前とアバター
       の画像を表示してレイアウトを整える */}
-      <ul>
+      <div className='connection-user-info-btn' onClick={participantHandle}>
+        <FontAwesomeIcon icon={faUsersViewfinder} className='participant-icon' />
+        <small>参加者</small>
+      </div>
+      <div className={`${participantDisplay ? "connection-user-info" : "hide"}`}>
+        <FontAwesomeIcon icon={faCircleXmark} className='close-icon' onClick={participantHandle} />
         {allUsers.map((user, index) => (
-          <li key={index}>{user.name}</li>
+          // 複数の要素を <li> で囲む
+          <li key={index}>
+            <small className='connection-user'>{user.username}</small>
+            <img src={avatars[user.avatart_number - 1]} alt="Avatar" className='connection-avatar' />
+          </li>
         ))}
-      </ul>
+      </div>
+
       <div className="chat-area-component">
         <div onClick={chatareaShowHide} className='chat-area-status-btn'>
           {chatAreaStatus ? <FontAwesomeIcon icon={faChevronLeft} className='icon' /> : <FontAwesomeIcon icon={faComment} className='icon' />}

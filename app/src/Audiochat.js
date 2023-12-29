@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons"
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons"
 import config from './config'
-const Audiochat = () => {
+const Audiochat = React.memo(function Audiochat(props) {
   const roomid = "11435";
   const socket = io(config.REACT_APP_AUDIO_SOCKET_URL);
   let myPeer;
@@ -152,6 +152,6 @@ const Audiochat = () => {
     </div>
 
   );
-}
+})
 
 export default Audiochat

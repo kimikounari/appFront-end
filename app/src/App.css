@@ -86,18 +86,14 @@
 }
 
 .bottom-navi {
-  display: flex;
-  width: 100%;
-  justify-content: center;
   position: fixed;
-  bottom: 0px;
+  bottom: 100px;
   overflow-x: auto;
   z-index: 100;
 }
 
 .exit-button {
   height: 58px;
-  margin: 0px 20px;
   width: 150px;
 }
 
@@ -117,7 +113,7 @@
 .active {
   width: 150px;
   text-align: center;
-  margin: 0px 20px;
+  margin-bottom: 30px;
   font-size: 20px;
   color: white;
 }
@@ -137,7 +133,7 @@
 
 .video-chat-start-btn {
   height: 58px;
-  margin: 0px 20px;
+  margin-bottom: 30px;
   width: 150px;
 }
 
@@ -167,6 +163,7 @@
 .chat-area-status-btn {
   z-index: 5;
   width: 150px;
+  margin-bottom: 30px;
 }
 
 .chat-area-close-text {
@@ -241,6 +238,113 @@ span {
 video {
   display: block;
   width: 250px;
+}
+
+.connection-user-info {
+  display: block;
+  position: fixed;
+  right: 5px;
+  bottom: 100px;
+}
+
+.connection-user {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 230px;
+}
+
+.connection-avatar {
+  display: block;
+  width: 230px;
+  height: 160px;
+}
+
+li {
+  list-style: none;
+}
+
+.connection-user-info-btn {
+  display: block;
+  position: fixed;
+  right: 5px;
+  bottom: 100px;
+  width: 100px;
+}
+
+.connection-user-info-btn small {
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  display: block;
+  width: 100%;
+}
+
+.participant-icon {
+  display: block;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.close-icon {
+  display: block;
+  font-size: 30px;
+  color: white;
+}
+
+.open-navi {
+  position: fixed;
+  bottom: 400px;
+  overflow-x: auto;
+  z-index: 100;
+  color: white;
+  font-size: 30px;
+  padding-left: 10px;
+}
+
+.close-navi-butoon {
+  font-size: 30px;
+  color: white;
+  padding-left: 10px;
+}
+
+.avatar-select-area {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.avatar-select-area p {
+  text-align: center;
+}
+
+.avatar-select-area select {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.select-avatar-img-wrap {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.select-avatar-img-wrap div {
+  margin: 10px 5px;
+}
+
+.select-avatar-img-wrap img {
+  display: block;
+  width: 200px;
+  height: 150px;
+}
+
+.select-avatar-img-wrap small {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 460px) {
