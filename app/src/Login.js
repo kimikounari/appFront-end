@@ -67,7 +67,7 @@ const Login = ({ setLoginUserInfo }) => {
         e.preventDefault();
         socket.emit('incrementUserCount');
         setLoading(true);
-        setLogoDisplay(false);
+
         try {
             axios.post(process.env.REACT_APP_TOKEN_API_URL, {
                 username: name,
@@ -89,10 +89,12 @@ const Login = ({ setLoginUserInfo }) => {
                             localStorage.setItem('myData', JSON.stringify(response.data));
                             setLoginUserInfo(response.data);
                             setLoginAreaDisplay(prevState => !prevState);
+                            setLogoDisplay(false);
                         })
                         .catch(error => {
                             // エラー処理
                             console.error(error);
+                            setLoginAreaDisplay(prevState => !prevState);
                         });
                 })
                 .catch(error => {

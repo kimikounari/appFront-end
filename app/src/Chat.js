@@ -58,6 +58,7 @@ export const Chat = (props) => {
   };
 
   const chatmessageUpdate = (e) => {
+    e.preventDefault();
     chatmessageSet(e.target.value);
   };
 
@@ -70,6 +71,15 @@ export const Chat = (props) => {
   const participantHandle = () => {
     setParticipantDisplay(prevState => !prevState);
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Backspace') {
+      if (e.target.value.length > 0) {
+        e.target.value = e.target.value.slice(0, -1);
+        e.preventDefault(); // デフォルトのBackspaceキーの挙動を防止
+      }
+    }
+  };
 
   return (
     <div>
@@ -102,7 +112,7 @@ export const Chat = (props) => {
             ))}
           </ul>
           <div className='send-area'>
-            <input type="text" value={chatmessage} onChange={chatmessageUpdate} className='send-field'></input>
+            <input type="text" value={chatmessage} onChange={chatmessageUpdate} onKeyDown={handleKeyDown} className='send-field'></input>
             <button onClick={chatmessageSend} className='send-btn'><FontAwesomeIcon icon={faPaperPlane} className='chat_send_icon' /></button>
           </div>
         </div>
