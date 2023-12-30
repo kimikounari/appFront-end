@@ -82,9 +82,12 @@
 
 .bottom-navi {
   position: fixed;
-  bottom: 100px;
+  bottom: -30px;
   overflow-x: auto;
   z-index: 100;
+  display: flex;
+  width: 100vw;
+  /* コンテナの幅をビューポートの幅に設定 */
 }
 
 .exit-button {
@@ -291,7 +294,7 @@ li {
 
 .open-navi {
   position: fixed;
-  bottom: 400px;
+  bottom: 70px;
   overflow-x: auto;
   z-index: 100;
   color: white;

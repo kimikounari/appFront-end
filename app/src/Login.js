@@ -15,6 +15,7 @@ const Login = ({ setLoginUserInfo }) => {
     const [serverResponeMessage, setServerResponseMessage] = useState('');
     const [avatar_number, setAvatarNum] = useState('1');
     const [userCount, setUserCount] = useState(0);
+    const [lodoDisplay, setLogoDisplay] = useState(true);
     const avatars = [
         '/DefaultAvatar.png',
         '/character_one.png'
@@ -37,6 +38,7 @@ const Login = ({ setLoginUserInfo }) => {
         e.preventDefault();
         setLoading(true);
         setServerResponseMessage('');
+        setLogoDisplay(false);
         try {
             const response = await axios.post(process.env.REACT_APP_SIGN_API_URL, {
                 username: name,
@@ -65,6 +67,7 @@ const Login = ({ setLoginUserInfo }) => {
         e.preventDefault();
         socket.emit('incrementUserCount');
         setLoading(true);
+        setLogoDisplay(false);
         try {
             axios.post(process.env.REACT_APP_TOKEN_API_URL, {
                 username: name,
@@ -118,10 +121,11 @@ const Login = ({ setLoginUserInfo }) => {
 
     return (
         <div className='login-area-wrap'>
-            <div className='app-logo-area'>
+
+            <div className={`${lodoDisplay ? "app-logo-area" : "hide"}`}>
                 <img src='appLogo.png' className='app-logo-img'></img>
             </div>
-            <div className='token-area'>
+            <div className={`${lodoDisplay ? "token-area" : "hide"}`}>
                 <div className={`${loading ? "communication-style" : "hide"}`}></div>
                 <div className={`${loginAreaDiaplay ? "require-login-area" : "hide"}`}>
                     <div className={`${signupDisplay ? "signup-area" : "hide"}`}>
