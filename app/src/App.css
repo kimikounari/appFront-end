@@ -208,6 +208,7 @@
   position: fixed;
   top: 3px;
   right: 3px;
+  z-index: 200;
 }
 
 .video-chat-display-btn {
