@@ -2,11 +2,6 @@
   display: none;
 }
 
-.login-area,
-.signup-area {
-  margin-top: 100px;
-}
-
 .login-text-input,
 .login-password-input,
 .login-button,
@@ -33,7 +28,7 @@
 .signup-button {
   width: 150px;
   height: 50px;
-  background-color: blue;
+  background-color: #ff69b4;
   border: none;
   color: white;
   margin-top: 20px;
@@ -347,6 +342,29 @@ li {
   font-size: 20px;
 }
 
+.login-area-wrap {
+  display: flex;
+}
+
+.app-logo-area {
+  width: 30%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.app-logo-img {
+  display: block;
+  width: 300px;
+}
+
+.token-area {
+  width: 70%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
 @media screen and (max-width: 460px) {
 
   .login-text-input,
@@ -360,6 +378,26 @@ li {
 }
 
 
+@media screen and (max-width: 885px) {
+  .login-area-wrap {
+    display: block;
+  }
+
+  .app-logo-area {
+    width: 100%;
+    height: auto;
+    justify-items: start;
+  }
+
+  .app-logo-img {
+    width: 100px;
+  }
+
+  .token-area {
+    width: 100%;
+    height: auto;
+  }
+}
 
 @media screen and (max-width: 650px) {
   .bottom-navi {

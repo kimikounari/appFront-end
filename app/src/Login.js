@@ -117,73 +117,78 @@ const Login = ({ setLoginUserInfo }) => {
     }
 
     return (
-        <div>
-            <div className={`${loading ? "communication-style" : "hide"}`}></div>
-            <div className={`${loginAreaDiaplay ? "require-login-area" : "hide"}`}>
-                <div className={`${signupDisplay ? "signup-area" : "hide"}`}>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="ニックネーム"
-                            className='signup-text-input'
-                        />
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="パスワード"
-                            className='signup-password-input'
-                        />
-                        <div className='avatar-select-area'>
-                            <p>使用するアバターを選んでください。</p>
-                            <div className='select-avatar-img-wrap'>
-                                {avatars.map((avatar, index) => (
-                                    <div>
-                                        <img key={index} src={avatar} alt={`Avatar ${index + 1}`} className="select-avatar-img" />
-                                        <small>{index + 1}のアバター</small>
-                                    </div>
-                                ))}
+        <div className='login-area-wrap'>
+            <div className='app-logo-area'>
+                <img src='appLogo.png' className='app-logo-img'></img>
+            </div>
+            <div className='token-area'>
+                <div className={`${loading ? "communication-style" : "hide"}`}></div>
+                <div className={`${loginAreaDiaplay ? "require-login-area" : "hide"}`}>
+                    <div className={`${signupDisplay ? "signup-area" : "hide"}`}>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="ニックネーム"
+                                className='signup-text-input'
+                            />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="パスワード"
+                                className='signup-password-input'
+                            />
+                            <div className='avatar-select-area'>
+                                <p>使用するアバターを選んでください。</p>
+                                <div className='select-avatar-img-wrap'>
+                                    {avatars.map((avatar, index) => (
+                                        <div>
+                                            <img key={index} src={avatar} alt={`Avatar ${index + 1}`} className="select-avatar-img" />
+                                            <small>{index + 1}のアバター</small>
+                                        </div>
+                                    ))}
+                                </div>
+                                <select value={avatar_number} onChange={(e) => setAvatarNum(e.target.value)}>
+                                    <option value="1">1のアバターを使用</option>
+                                    <option value="2">2のアバターを使用</option>
+                                </select>
                             </div>
-                            <select value={avatar_number} onChange={(e) => setAvatarNum(e.target.value)}>
-                                <option value="1">1のアバターを使用</option>
-                                <option value="2">2のアバターを使用</option>
-                            </select>
-                        </div>
-                        <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
-                        <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
-                        <button type="submit" className='signup-button'>サインアップ</button>
-                        <a href='#' onClick={toggleSignupDisplay} className='login-redirect-text'>ログイン</a>
-                    </form>
-                </div>
-                <div className={`${signupDisplay ? "hide" : "login-area"}`}>
-                    <form>
-                        {userCount < 3 ? (
-                            <>
-                                <input
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="ユーザー名"
-                                    className='login-text-input'
-                                />
-                                <input
-                                    type="password"
-                                    value={loginPass}
-                                    onChange={(e) => setLoginPass(e.target.value)}
-                                    placeholder="Password"
-                                    className='login-password-input'
-                                />
-                                <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
-                                <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
-                                <button type="submit" className='login-button' onClick={handleRetrieve}>ログイン</button>
-                            </>
-                        ) : (
-                            <p>現在二人のユーザーが同時アクセスしているので、ログインできません。しばらくお待ちください。</p>
-                        )}
-                        <a href="#" onClick={toggleSignupDisplay} className='signup-redirect-text'>アカウントを作成する</a>
-                    </form>
+                            <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
+                            <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
+                            <button type="submit" className='signup-button'>サインアップ</button>
+                            <a href='#' onClick={toggleSignupDisplay} className='login-redirect-text'>ログイン</a>
+                        </form>
+                    </div>
+                    <div className={`${signupDisplay ? "hide" : "login-area"}`}>
+                        <form>
+                            {userCount < 3 ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="ユーザー名"
+                                        className='login-text-input'
+                                    />
+                                    <input
+                                        type="password"
+                                        value={loginPass}
+                                        onChange={(e) => setLoginPass(e.target.value)}
+                                        placeholder="Password"
+                                        className='login-password-input'
+                                    />
+                                    <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
+                                    <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
+                                    <button type="submit" className='login-button' onClick={handleRetrieve}>ログイン</button>
+                                </>
+                            ) : (
+                                <p>現在二人のユーザーが同時アクセスしているので、ログインできません。しばらくお待ちください。</p>
+                            )}
+                            <a href="#" onClick={toggleSignupDisplay} className='signup-redirect-text'>アカウントを作成する</a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
