@@ -7,8 +7,15 @@ import { faMicrophone } from "@fortawesome/free-solid-svg-icons"
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons"
 import config from './config'
 const Audiochat = React.memo(function Audiochat(props) {
+  let socket;//try
+  let call;//try
   const roomid = "11435";
-  const socket = io(config.REACT_APP_AUDIO_SOCKET_URL);
+  try {
+    socket = io(config.REACT_APP_AUDIO_SOCKET_URL);
+  } catch (error) {
+    //TODO:通信エラーをユーザーに知らせる
+    console.log('通信エラー:', error);
+  }
   let myPeer;
   const myVideo = document.createElement('video');
   myVideo.muted = true;
@@ -24,16 +31,34 @@ const Audiochat = React.memo(function Audiochat(props) {
   useEffect(() => {
     buttonNoneRef.current.classList.add('active_false');
     const connectToNewUser = (userId, stream) => {
-      const call = myPeer.call(userId, stream);
-      const video = document.createElement('video');
-      video.setAttribute('playsinline', 'true');
-      call.on("stream", (userVideoStream) => {
-        addVideoStresm(video, userVideoStream);
-      });
-      call.on("close", () => {
-        video.remove();
-      })
-      peers[userId] = call;
+      try {
+        try {
+          call = myPeer.call(userId, stream);
+        } catch (error) {
+          console.error('新しいピアとの接続エラー:', error);
+          //TODO: ここにエラー発生時の処理を記述
+        }
+        const video = document.createElement('video');
+        video.setAttribute('playsinline', 'true');
+        call.on("stream", (userVideoStream) => {
+          addVideoStresm(video, userVideoStream);
+        });
+        call.on("close", () => {
+          video.remove();
+        })
+        try {
+          peers[userId] = call;
+        } catch (error) {
+          console.error('新しいピアとの接続エラー:', error);
+          // TODO:ここにエラー発生時の処理を記述
+        }
+      } catch (error) {
+        console.error('新しいユーザーとの接続エラー:', error);
+        // TODO:ここにエラー発生時の処理を記述
+        setTimeout(() => {
+          connectToNewUser(userId, stream);
+        }, 5000); // 5秒後に再接続を試みる
+      }
     }
 
     const addVideoStresm = (video, stream) => {
@@ -74,6 +99,12 @@ const Audiochat = React.memo(function Audiochat(props) {
       });
 
     myPeer.on("disconnected", (userId) => {
+      try {
+        // 切断時の処理
+      } catch (error) {
+        console.error('ピアの切断処理中のエラー:', error);
+        // TODO:ここにエラー発生時の処理を記述
+      }
     })
     myPeer.on("error", (err) => {
     });
@@ -85,8 +116,12 @@ const Audiochat = React.memo(function Audiochat(props) {
       if (peers[userId]) peers[userId].close();
     })
 
-    //テスト
-    socket.on("connect_error", (err) => {
+    //try
+    socket.on("connect_error", (error) => {
+      console.error('ソケット接続エラー:', error);
+      setTimeout(() => {
+        socket.connect();
+      }, 5000); // 5秒後に再接続を試みる
     });
   }, []);
 
