@@ -23,6 +23,7 @@ const VideoChat = (props) => {
     const connectToNewUser = (userId, stream) => {
         const call = myPeer.call(userId, stream);
         const video = document.createElement('video');
+        video.setAttribute('playsinline', 'true');
         call.on("stream", (userVideoStream) => {
             addVideoStresm(video, userVideoStream);
         });
@@ -51,6 +52,7 @@ const VideoChat = (props) => {
     }
 
     const addVideoStresm = (video, stream) => {
+        video.setAttribute('playsinline', 'true'); // この行を追加
         video.srcObject = stream;
         video.addEventListener("loadedmetadata", () => {
             video.play();
