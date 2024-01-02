@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import './App.css';
 import io from 'socket.io-client';
@@ -20,35 +20,62 @@ const VideoChat = (props) => {
     const buttonText = useRef(null);
     const buttonTextAudio = useRef(null);
     const videoUserName = useRef([]);
-    const connectToNewUser = (userId, stream) => {
-        const call = myPeer.call(userId, stream);
-        const video = document.createElement('video');
-        video.setAttribute('playsinline', 'true');
-        call.on("stream", (userVideoStream) => {
-            addVideoStresm(video, userVideoStream);
-        });
-        call.on("close", () => {
-            video.remove();
-        })
+    let userId
+    let stream
+    let call;
+    // 接続エラーのリスナーを追加
+    socket.on('connect_error', (error) => {
+        console.error('Socket.IO接続エラー:', error);
+        // TODO: エラーメッセージを表示するためのUIの更新など
+        setTimeout(() => {
+            socket.connect();
+        }, 5000); // 5秒後
+    });
 
-        // エラーハンドリングを追加
-        call.on("error", (err) => {
-            console.error("Error occurred during call:", err);
-        });
-        const conn = myPeer.connect(userId);
-        conn.on('open', () => {
-            // データコネクションが開いたらユーザー名を送信
-            conn.send({ type: 'username', username: props.loginUserName });
-        });
-        conn.on('data', (data) => {
-            let partnerUserId = data.userId.toString();
-            let partnerUserIdRemoveHyphen = "user" + partnerUserId.replace(/-/g, '');
-            const span = document.createElement('span');
-            span.textContent = data.username;
-            span.classList.add(partnerUserIdRemoveHyphen);
-            videoUserName.current.appendChild(span);
-        });
-        peers[userId] = call;
+    // 通信エラーのリスナーを追加（必要に応じて）
+    socket.on('error', (error) => {
+        console.error('Socket.IO通信エラー:', error);
+        // TODO: エラーメッセージを表示するためのUIの更新など
+    });
+
+    const connectToNewUser = (userId, stream) => {
+        try {
+            try {
+                call = myPeer.call(userId, stream);
+            } catch (error) {
+                console.log('P2P接続のエラー');
+            }
+            const video = document.createElement('video');
+            video.setAttribute('playsinline', 'true');
+            call.on("stream", (userVideoStream) => {
+                addVideoStresm(video, userVideoStream);
+            });
+            call.on("close", () => {
+                video.remove();
+            })
+
+            // エラーハンドリングを追加
+            call.on("error", (err) => {
+                console.error("Error occurred during call:", err);
+            });
+            const conn = myPeer.connect(userId);
+            conn.on('open', () => {
+                // データコネクションが開いたらユーザー名を送信
+                conn.send({ type: 'username', username: props.loginUserName });
+            });
+            conn.on('data', (data) => {
+                let partnerUserId = data.userId.toString();
+                let partnerUserIdRemoveHyphen = "user" + partnerUserId.replace(/-/g, '');
+                const span = document.createElement('span');
+                span.textContent = data.username;
+                span.classList.add(partnerUserIdRemoveHyphen);
+                videoUserName.current.appendChild(span);
+            });
+            peers[userId] = call;
+        } catch (erro) {
+            console.error('P2P通信の接続エラー:', erro);
+            //TODO:エラーメッセージの表示やその他のエラー処理
+        }
     }
 
     const addVideoStresm = (video, stream) => {
@@ -60,36 +87,43 @@ const VideoChat = (props) => {
         videoWeap.current.appendChild(video);
     }
 
-    const functionVideoChat = () => {
+    const functionVideoChat = async () => {
         const span = document.createElement('span');
         span.textContent = props.loginUserName;
         videoUserName.current.appendChild(span);
         myPeer = new window.Peer()
 
-        navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: false,
-        })
-            .then((stream) => {
-                myVideoStream = stream;
-                addVideoStresm(myVideo, stream);
-                myPeer.on("call", (call) => {
-                    call.answer(stream);
-                    const video = document.createElement("video");
-                    call.on("stream", userVideoStream => {
-                        addVideoStresm(video, userVideoStream);
-                    })
-                    call.on("close", () => {
-                        video.remove();
-                    })
-                    const userId = call.peer;
-                    peers[userId] = call;
-                })
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false,
+            })
 
-                socket.on("user-connected", (userId) => {
-                    connectToNewUser(userId, myVideoStream);
+            myVideoStream = stream;
+            addVideoStresm(myVideo, stream);
+            myPeer.on("call", (call) => {
+                call.answer(stream);
+                const video = document.createElement("video");
+                call.on("stream", userVideoStream => {
+                    addVideoStresm(video, userVideoStream);
                 })
-            });
+                call.on("close", () => {
+                    video.remove();
+                })
+                userId = call.peer;
+                peers[userId] = call;
+            })
+
+            socket.on("user-connected", (userId) => {
+                connectToNewUser(userId, myVideoStream);
+            })
+        } catch (error) {
+            console.error('メディアデバイスアクセスエラー:', error);
+            //TODO:エラーメッセージを表示するためのUIの更新など
+            setTimeout(() => {
+                connectToNewUser(userId, stream);
+            }, 5000); // 5秒後に再接続を試みる
+        }
 
         myPeer.on("disconnected", (userId) => {
         })
@@ -147,7 +181,6 @@ const VideoChat = (props) => {
             videos[i].remove();
         }
     }
-
 
 
     return (

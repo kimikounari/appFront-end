@@ -23,6 +23,26 @@ export const Chat = (props) => {
 
   useEffect(() => {
     socket = io(config.REACT_APP_CHAT_SOCKET_URL);
+    socket.on('connect_error', (error) => {
+      console.error('ソケット接続エラー:', error);
+      // TODO:エラーメッセージの表示や再接続の試みなど
+      setTimeout(() => {
+        socket.connect();
+      }, 5000); // 5秒後に再接続を試みる
+    });
+
+    socket.on('disconnect', (reason) => {
+      console.warn('ソケットが切断されました:', reason);
+      // TODO:エラーメッセージの表示や再接続の試みなど
+    });
+
+    socket.on('error', (error) => {
+      console.error('ソケット通信エラー:', error);
+      // TODO:エラーメッセージの表示など
+      setTimeout(() => {
+        socket.connect();
+      }, 5000); // 5秒後に再接続を試みる
+    });
     socket.on('connect', () => {
 
       socket.emit('userInfo', loginUserInfo);
@@ -49,6 +69,9 @@ export const Chat = (props) => {
 
     return () => {
       socket.off('userDisconnected');
+      socket.off('connect_error');
+      socket.off('disconnect');
+      socket.off('error');
       socket.disconnect();
     };
   }, [loginUserInfo]);
