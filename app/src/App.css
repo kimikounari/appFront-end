@@ -19,19 +19,23 @@
 .login-password-input,
 .signup-text-input,
 .signup-password-input {
-  width: 450px;
+  display: block;
+  margin-top: 30px auto;
   height: 50px;
   font-size: 20px;
+  width: 50%;
 }
 
 .login-button,
 .signup-button {
-  width: 150px;
-  height: 50px;
-  background-color: #ff69b4;
+  display: block;
+  background-color: blue;
   border: none;
   color: white;
+  border: solid 1px blue;
   margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 15px;
 }
 
 .communication-message {
@@ -349,10 +353,6 @@ li {
   font-size: 20px;
 }
 
-.login-area-wrap {
-  display: flex;
-}
-
 .app-logo-area {
   width: 30%;
   height: 100vh;
@@ -360,22 +360,35 @@ li {
   place-items: center;
 }
 
-.app-logo-img {
-  display: block;
-  width: 300px;
-}
-
-.token-area {
-  width: 70%;
-  height: 100vh;
-  display: grid;
-  place-items: center;
-}
 
 .video-chat-area {
   display: flex;
 }
 
+.login-area {
+  margin-top: 200px;
+}
+
+.check-box {
+  margin: 0px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  padding-top: 3px;
+}
+
+.passwor-chackbox-wrap {
+  width: 80%;
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.passwor-chackbox-text {
+  display: block;
+  font-size: 15px;
+}
 
 @media screen and (max-width: 460px) {
 
@@ -389,6 +402,61 @@ li {
   }
 }
 
+.network-error-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 25px;
+}
+
+.network-error-area button {
+  background-color: rgb(2, 121, 248);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+.terms-container {
+  height: 200px;
+  /* 適切な高さに設定 */
+  overflow-y: scroll;
+  /* スクロール可能に */
+  border: 1px solid #ccc;
+  /* 見た目のためのボーダー */
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.accept-button {
+  background-color: blue;
+  color: white;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 15px;
+  border: none;
+  font-size: 25px;
+  margin-top: 30px;
+}
+
+h3 {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  color: red;
+}
+
+.careful-text {
+  display: block;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
 
 @media screen and (max-width: 885px) {
   .login-area-wrap {
@@ -405,10 +473,6 @@ li {
     width: 100px;
   }
 
-  .token-area {
-    width: 100%;
-    height: auto;
-  }
 }
 
 @media screen and (max-width: 650px) {

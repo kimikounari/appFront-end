@@ -16,6 +16,7 @@ export const Chat = (props) => {
   const { loginUserInfo } = props;
   const [allUsers, setAllUsers] = useState([]);
   const [participantDisplay, setParticipantDisplay] = useState(false);
+  const networkRef = useState(null);
   const avatars = [
     '/DefaultAvatar.png',  // 例: public/DefaultAvatar.png
     '/character_one.png'   // 例: public/AnotherAvatar.png
@@ -25,7 +26,8 @@ export const Chat = (props) => {
     socket = io(config.REACT_APP_CHAT_SOCKET_URL);
     socket.on('connect_error', (error) => {
       console.error('ソケット接続エラー:', error);
-      // TODO:エラーメッセージの表示や再接続の試みなど
+      networkRef.current.classList.add('network-error-area');
+      networkRef.current.classList.remove('hide');
       setTimeout(() => {
         socket.connect();
       }, 5000); // 5秒後に再接続を試みる
@@ -33,12 +35,12 @@ export const Chat = (props) => {
 
     socket.on('disconnect', (reason) => {
       console.warn('ソケットが切断されました:', reason);
-      // TODO:エラーメッセージの表示や再接続の試みなど
     });
 
     socket.on('error', (error) => {
       console.error('ソケット通信エラー:', error);
-      // TODO:エラーメッセージの表示など
+      networkRef.current.classList.add('network-error-area');
+      networkRef.current.classList.remove('hide');
       setTimeout(() => {
         socket.connect();
       }, 5000); // 5秒後に再接続を試みる
@@ -104,10 +106,12 @@ export const Chat = (props) => {
     }
   };
 
+  const networkErrorHide = (e) => {
+    networkRef.current.classList.add('hide');
+    networkRef.current.classList.remove('network-error-area');
+  }
   return (
     <div>
-      {/* TODO:接続してるユーザーの名前とアバター
-      の画像を表示してレイアウトを整える */}
       <div className='connection-user-info-btn' onClick={participantHandle}>
         <FontAwesomeIcon icon={faUsersViewfinder} className='participant-icon' />
         <small>参加者</small>
@@ -115,7 +119,6 @@ export const Chat = (props) => {
       <div className={`${participantDisplay ? "connection-user-info" : "hide"}`}>
         <FontAwesomeIcon icon={faCircleXmark} className='close-icon' onClick={participantHandle} />
         {allUsers.map((user, index) => (
-          // 複数の要素を <li> で囲む
           <li key={index}>
             <small className='connection-user'>{user.username}</small>
             <img src={avatars[user.avatart_number - 1]} alt="Avatar" className='connection-avatar' />
@@ -139,6 +142,10 @@ export const Chat = (props) => {
             <button onClick={chatmessageSend} className='send-btn'><FontAwesomeIcon icon={faPaperPlane} className='chat_send_icon' /></button>
           </div>
         </div>
+      </div>
+      <div ref={networkRef} className='hide'>
+        <p>通信エラーが発生しました。</p>
+        <button onClick={networkErrorHide}>OK</button>
       </div>
     </div>
   )

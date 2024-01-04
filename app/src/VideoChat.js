@@ -20,6 +20,7 @@ const VideoChat = (props) => {
     //ミュートボタン管理
     const videoButtonRef = useRef(null);
     const videoButtonNoneRef = useState(null);
+    const networkRef = useState(null);
     const videoText = useRef(null);
     const buttonTextVideo = useRef(null);
     const videoUserName = useRef([]);
@@ -33,7 +34,8 @@ const VideoChat = (props) => {
     // 接続エラーのリスナーを追加
     socket.on('connect_error', (error) => {
         console.error('Socket.IO接続エラー:', error);
-        // TODO: エラーメッセージを表示するためのUIの更新など
+        networkRef.current.classList.add('network-error-area');
+        networkRef.current.classList.remove('hide');
         setTimeout(() => {
             socket.connect();
         }, 5000); // 5秒後
@@ -42,7 +44,8 @@ const VideoChat = (props) => {
     // 通信エラーのリスナーを追加（必要に応じて）
     socket.on('error', (error) => {
         console.error('Socket.IO通信エラー:', error);
-        // TODO: エラーメッセージを表示するためのUIの更新など
+        networkRef.current.classList.add('network-error-area');
+        networkRef.current.classList.remove('hide');
     });
     useEffect(() => {
         const connectToNewUser = (userId, stream) => {
@@ -81,7 +84,8 @@ const VideoChat = (props) => {
                 peers[userId] = call;
             } catch (erro) {
                 console.error('P2P通信の接続エラー:', erro);
-                //TODO:エラーメッセージの表示やその他のエラー処理
+                networkRef.current.classList.add('network-error-area');
+                networkRef.current.classList.remove('hide');
             }
         }
 
@@ -128,7 +132,8 @@ const VideoChat = (props) => {
                 })
             } catch (error) {
                 console.error('メディアデバイスアクセスエラー:', error);
-                //TODO:エラーメッセージを表示するためのUIの更新など
+                networkRef.current.classList.add('network-error-area');
+                networkRef.current.classList.remove('hide');
                 setTimeout(() => {
                     connectToNewUser(userId, stream);
                 }, 5000); // 5秒後に再接続を試みる
@@ -237,6 +242,11 @@ const VideoChat = (props) => {
         }
     }
 
+    const networkErrorHide = (e) => {
+        networkRef.current.classList.add('hide');
+        networkRef.current.classList.remove('network-error-area');
+    }
+
 
     return (
         <div className='video-chat-area'>
@@ -250,9 +260,9 @@ const VideoChat = (props) => {
                 <div ref={videoWeap} id='video-wrap'></div>
             </div>
 
-            <div className='video_controller'>
-
-
+            <div ref={networkRef} className='hide'>
+                <p>通信エラーが発生しました。</p>
+                <button onClick={networkErrorHide}>OK</button>
             </div>
         </div>
     )
