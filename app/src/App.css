@@ -54,21 +54,19 @@
   position: fixed;
   top: 0px;
   right: 0px;
-  min-height: 100vh;
+  height: auto;
   width: 400px;
   background-color: rgba(240, 240, 240, 0.5);
   z-index: 10;
-  padding-top: 40px;
 }
 
 .send-area {
   position: absolute;
-  bottom: 3px;
   right: 0px;
   display: flex;
   justify-content: center;
   width: 400px;
-  margin-bottom: 50px;
+  bottom: 3px;
 }
 
 .send-field {
@@ -172,9 +170,12 @@
 }
 
 .message {
-  height: 700px;
+  margin-top: 0px;
+  height: 300px;
   overflow-y: auto;
   list-style: none;
+  padding-bottom: 30px;
+  padding-left: 0px;
 }
 
 .user-logged-in {
@@ -237,6 +238,8 @@ span {
 video {
   display: block;
   width: 250px;
+  height: 180px;
+  object-fit: cover;
 }
 
 .connection-user-info {
@@ -369,6 +372,11 @@ li {
   place-items: center;
 }
 
+.video-chat-area {
+  display: flex;
+}
+
+
 @media screen and (max-width: 460px) {
 
   .login-text-input,
@@ -408,6 +416,25 @@ li {
     justify-content: flex-start;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .chat-area {
+    width: 100%;
+  }
+
+  .send-area {
+    width: 100%;
+  }
+
+  .send-field {
+    width: 80%;
+  }
+
+  .send-btn {
+    width: 20%;
+  }
+}
+
 
 @media screen and (max-width: 312px) {
   video {

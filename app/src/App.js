@@ -3,7 +3,6 @@ import { Chat } from './Chat';
 import { UnityDisplay } from './Unity';
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Audiochat from './Audiochat';
 import './App.css';
 import VideoChat from './VideoChat';
 import axios from 'axios';
@@ -55,9 +54,6 @@ function App() {
           <div className={`${videoChatDisplay ? "video-chat-area" : "hide"}`}>
             <VideoChat loginUserName={loginUserInfo.username} />
           </div>
-        )}
-        {loginUserInfo && (
-          <Audiochat />
         )}
 
         {loginUserInfo && (
