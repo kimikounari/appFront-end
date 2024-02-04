@@ -8,6 +8,7 @@ import { faVideoSlash } from "@fortawesome/free-solid-svg-icons"
 import config from './config'
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons"
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons"
+import Peer from 'peerjs';
 const VideoChat = (props) => {
     const roomid = "56564";
     const socket = io(config.REACT_APP_VIDEO_SOCKET_URL);
@@ -102,7 +103,13 @@ const VideoChat = (props) => {
             const span = document.createElement('span');
             span.textContent = props.loginUserName;
             videoUserName.current.appendChild(span);
-            myPeer = new window.Peer()
+            myPeer = new Peer({
+                config: {
+                    iceServers: [
+                        { urls: 'stun:stun.l.google.com:19302' }
+                    ]
+                }
+            });
 
             try {
                 stream = await navigator.mediaDevices.getUserMedia({
