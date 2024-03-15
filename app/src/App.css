@@ -13,6 +13,7 @@
   display: block;
   margin: 10px auto;
   text-align: center;
+  color: #fa8072;
 }
 
 .login-text-input,
@@ -29,10 +30,10 @@
 .login-button,
 .signup-button {
   display: block;
-  background-color: blue;
+  background-color: #fa8072;
   border: none;
   color: white;
-  border: solid 1px blue;
+  border: solid 1px #fa8072;
   margin-top: 20px;
   padding: 10px 25px;
   font-size: 15px;
@@ -59,8 +60,8 @@
   top: 0px;
   right: 0px;
   height: auto;
-  width: 400px;
-  background-color: rgba(240, 240, 240, 0.5);
+  width: 30%;
+  background-color: white;
   z-index: 10;
 }
 
@@ -69,8 +70,8 @@
   right: 0px;
   display: flex;
   justify-content: center;
-  width: 400px;
-  bottom: 3px;
+  width: 100%;
+  bottom: 31px;
 }
 
 .send-field {
@@ -175,11 +176,11 @@
 
 .message {
   margin-top: 0px;
-  height: 300px;
+  height: 100vh;
   overflow-y: auto;
   list-style: none;
-  padding-bottom: 30px;
   padding-left: 0px;
+  width: 100%;
 }
 
 .user-logged-in {
@@ -366,7 +367,7 @@ li {
 }
 
 .login-area {
-  margin-top: 200px;
+  margin: 100px 0px 100px 0px;
 }
 
 .check-box {
@@ -388,6 +389,27 @@ li {
 .passwor-chackbox-text {
   display: block;
   font-size: 15px;
+}
+
+.image-wrap {
+  width: 70%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.image-wrap img {
+  display: block;
+  width: 300px;
+}
+
+.catchphrase {
+  width: 80%;
+  margin: 25px auto;
+  font-size: 30px;
+  color: #fa8072;
+  text-align: center;
 }
 
 @media screen and (max-width: 460px) {
@@ -434,7 +456,7 @@ li {
 }
 
 .accept-button {
-  background-color: blue;
+  background-color: #fa8072;
   color: white;
   display: block;
   margin: 0 auto;
@@ -444,19 +466,40 @@ li {
   margin-top: 30px;
 }
 
-h3 {
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
-  color: red;
-}
-
 .careful-text {
   display: block;
   width: 80%;
   text-align: center;
   margin: 0 auto;
 }
+
+footer {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+}
+
+footer a {
+  display: block;
+  color: #fa8072;
+  font-size: 30px;
+  width: 50%;
+}
+
+.twitter-area {
+  text-align: right;
+}
+
+.facebook-area {
+  text-align: left;
+}
+
+.social-lin-wrap {
+  width: 50%;
+  margin: 5px auto;
+  display: flex;
+}
+
 
 @media screen and (max-width: 885px) {
   .login-area-wrap {
@@ -479,29 +522,33 @@ h3 {
   .bottom-navi {
     justify-content: flex-start;
   }
-}
 
-@media screen and (max-width: 400px) {
   .chat-area {
     width: 100%;
   }
 
-  .send-area {
-    width: 100%;
-  }
-
-  .send-field {
+  .careful-area {
     width: 80%;
-  }
-
-  .send-btn {
-    width: 20%;
   }
 }
 
+.copyright-wrap a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  margin: 10px auto;
+}
 
 @media screen and (max-width: 312px) {
   video {
     width: 100%;
   }
+}
+
+.careful-area {
+  width: 50%;
+  margin: 50px auto;
+  border: solid 2px #fa8072;
+  padding: 20px;
 }

@@ -20,6 +20,7 @@ const Login = ({ setLoginUserInfo }) => {
     const [acceptButtonHandle, setAcceptButtonHandle] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [isCheckedTerms, setIsCheckedTerms] = useState(false)
     const avatars = [
         '/DefaultAvatar.png',
         '/character_one.png'
@@ -134,6 +135,9 @@ const Login = ({ setLoginUserInfo }) => {
             setSignupButtonHandle(false)
         }
         setServerResponseMessage('');
+        if (isCheckedTerms) {
+            setIsCheckedTerms(false);
+        }
     }
 
     const logout = () => {
@@ -153,10 +157,25 @@ const Login = ({ setLoginUserInfo }) => {
         setPasswordShown(!passwordShown);
     };
 
+    const handleCheckboxChange = (event) => {
+        setIsChecked(event.target.checked);
+    };
+
+    const handleCheckboxTerms = (event) => {
+        setIsCheckedTerms(event.target.checked);
+    }
+
     return (
         <div className='login-area-wrap'>
-
             <div className={`${lodoDisplay ? "token-area" : "hide"}`}>
+                <div className='careful-area'>
+                    <h3>[このアプリと現在の段階について]</h3>
+                    <p>
+                        このアプリは孤独感を解消し、コミュニケーションの練習ができることを目的に開発中です。現在は予算とサーバーリソースの制限で試作段階にあり、ログインやチャット、音声・ビデオ通話の機能で遅延が生じます。今後はVR導入やサーバーの強化、機能改善を計画しています。3D制作やプログラミングが好きな方々と取り組めたら幸いです。
+                        <p>連絡先：2301100228qq@cyber-u.ac.jp</p>
+                        <p>試作中のアプリを試す場合は、サーバーのリソースがテスト向けで、運用向けではないことをご理解ください。また、音声通話、ビデオ通話において、お使いのネットワークによって、機能しないことがある点もご理解ください。面白半分でお願いします。</p>
+                    </p>
+                </div>
                 <div className={`${loading ? "communication-style" : "hide"}`}></div>
                 <div className={`${loginAreaDiaplay ? "require-login-area" : "hide"}`}>
                     <div className={`${signupDisplay ? "signup-area" : "hide"}`}>
@@ -202,50 +221,39 @@ const Login = ({ setLoginUserInfo }) => {
                             <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
                             <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
                             <div className="App">
-                                <h3 className={acceptButtonHandle ? "" : 'hide'}>注意事項</h3>
-                                <small className={acceptButtonHandle ? "careful-text" : 'hide'}>アプリを利用する上での注意事項です。スクロールして、「承諾する」ボタンを押すとアカウントが作成できます。</small>
+                                <small className={acceptButtonHandle ? "careful-text" : 'hide'}>アプリを利用するにあたっての「お願い」です。同意ボタンを押すと、単純なアカウントが作成できます。</small>
                                 <div className={acceptButtonHandle ? "terms-container" : 'hide'} onScroll={handleScroll} ref={termsRef}>
                                     {/* 利用規約のテキストをここに挿入 */}
-                                    <p>1. 行動規範<br></br>
-                                        適切な行動の期待： ユーザーに対して礼儀正しく、尊重のある行動を求めます。<br></br>
-                                        ハラスメントやいじめの禁止： 他のユーザーに対する嫌がらせ、いじめ、脅迫的な行動は厳禁とします。<br></br>
-                                        違法行為の禁止： 法律に違反する活動やコンテンツの共有を禁じます。<br></br>
-                                        2. コンテンツのガイドライン<br></br>
-                                        著作権の尊重： 著作権、商標権、その他の知的財産権を尊重して下さい。<br></br>
-                                        不適切なコンテンツの禁止： グラフィック性、暴力的、または不適切なコンテンツのアップロードを禁止します。<br></br>
-                                        ビデオ通話やチャットでは、個人情報となり得る内容の共有は避けてください。これには、住所、電話番号、金融情報などが含まれます。個人的な情報の保護とプライバシーの確保のため、これらのデータの共有は厳に慎んでください。<br></br>
-                                        3. プライバシーとデータ保護<br></br>
-                                        ユーザーのデータは、アプリを使う上で、下記の3つのことのために利用します。<br></br>
-                                        １：使用するアバターの番号<br></br>
-                                        ２：誰が、参加してるかを他のユーザーに知らせるため。<br></br>
-                                        ３：誰とチャットやビデオ通話をしてるのかを他のユーザーに知らせるため。<br></br>
-                                        <br></br>
-                                        ユーザーのデータは、第３者に提供することはありません。<br></br>
-                                        <br></br>
-                                        ビデオ通話中に背景をぼかす機能は現在提供されていません。そのため、カメラに個人情報が映り込まないようご注意ください。ビデオで背景が映ることに懸念がある場合は、ビデオ機能をオフにするか、背景を調整することをお勧めします。<br></br>
-                                        <br></br>
-                                        4. 利用制限とアカウント終了<br></br>
-                                        アカウントの停止や終了： 規約に違反する場合、アカウントが停止または終了される可能性があります。<br></br>
-                                        <br></br>
-                                        5. 免責事項<br></br>
-                                        サービスの「現状有姿」の提供： サービスが「現状のまま」提供され、保証することはできません。<br></br>
-                                        リスクの承認： ユーザーがサービスを利用することに伴うリスクを理解し、それを承認して下さい。<br></br>
-                                        6:その他<br></br>
-                                        本アプリの使用にはインターネット接続が必要です。アプリの使用によって発生するデータ通信料は、ユーザーの負担となります。データ通信料はユーザーのネットワークプロバイダの契約内容に依存しますので、ご利用前にプロバイダのプランをご確認ください。
-                                        <br></br>
-                                        本サービスに関連して生じるすべての紛争については、日本国法を適用し、日本の裁判所を専属的な管轄裁判所とします。
-                                        <br></br>
-                                        プロトタイプのアプリのため、エラーなどで正しく動作しない場合がありますが、ご了承ください。
-                                        利用しているネットワーク状況や端末のOSやハードウェアの要件によりアプリの機能が動作しないことがあります。比較的新しいデバイスでの利用をおすすめしますが、動作の保証はできません。
-                                    </p>
-                                    <button className="accept-button" onClick={toggleSignupButton}>承諾する</button>
+
+                                    <h3>利用にあたってのお願い</h3>
+                                    <h4>コミュニティの健全性への配慮</h4>
+                                    <p>「アプリ内で、他のユーザーや開発者に対して尊重と配慮を持って行動してください。攻撃的な発言や嫌がらせ、不適切なコンテンツの投稿は、コミュニティの健全性を損ないますのでお控えください。」</p>
+                                    <h4>プライバシーとセキュリティへの配慮</h4>
+                                    <p> 「アプリや関連するシステムのセキュリティや他のユーザーのプライバシーを守るために、不正なアクセスやハッキング行為、個人情報の不正利用は絶対におやめください。」</p>
+                                    <h4>営利目的や不正行為の禁止</h4>
+                                    <p>「アプリは、皆さんが楽しんで利用できるように提供されています。営利目的や不正な行為は避けてください。」</p>
+                                    <h4>共有の質と量の配慮</h4>
+                                    <p> 「スパム行為や不適切な広告の投稿は、コミュニティ全体の体験を損なう可能性があります。コンテンツの適切な共有と質の向上にご協力ください。」</p>
+                                    <h4>著作権や知的財産権の尊重</h4>
+                                    <p>「他のユーザーの著作権や知的財産権を尊重し、正当な権利を侵害しないようにしてください。コンテンツの共有や使用には、適切な権利を確認してください。」</p>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            checked={isCheckedTerms}
+                                            onChange={handleCheckboxTerms}
+                                        />
+                                        上記のお願いを読んで、理解した。
+                                    </label>
+                                    <button className="accept-button" onClick={toggleSignupButton} disabled={!isCheckedTerms}>同意する</button>
                                     {/* 長いテキストを挿入してスクロールをテスト */}
                                 </div>
 
                             </div>
                             <button type="submit" className={signupButtonHandle ? 'signup-button' : 'hide'}>アカウント作成</button>
                             <a href='#' onClick={toggleSignupDisplay} className='login-redirect-text'>ログイン</a>
+
                         </form>
+
                     </div>
                     <div className={`${signupDisplay ? "hide" : "login-area"}`}>
                         <form>
