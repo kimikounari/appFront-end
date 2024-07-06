@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './App.css';
-import './App.css';
+import './VideoChat.css';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo } from "@fortawesome/free-solid-svg-icons"
@@ -9,9 +8,10 @@ import config from './config'
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons"
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons"
 import Peer from 'peerjs';
+
 const VideoChat = (props) => {
     const roomid = "56564";
-    const socket = io(config.REACT_APP_VIDEO_SOCKET_URL);
+    const socket = io('https://trial-app-comu.onrender.com/video_chat_socket');
     let myPeer;
     const myVideo = document.createElement('video');
     myVideo.muted = true;
@@ -48,6 +48,7 @@ const VideoChat = (props) => {
         networkRef.current.classList.add('network-error-area');
         networkRef.current.classList.remove('hide');
     });
+
     useEffect(() => {
         const connectToNewUser = (userId, stream) => {
             try {
@@ -105,9 +106,23 @@ const VideoChat = (props) => {
             videoUserName.current.appendChild(span);
             myPeer = new Peer({
                 config: {
-                    iceServers: [
-                        { urls: 'stun:stun.l.google.com:19302' }
-                    ]
+                    //iceServers: [
+                    //{ urls: 'stun:stun.l.google.com:19302' }
+                    //]
+                    iceServers: [{
+                        urls: ["stun:ntk-turn-2.xirsys.com"]
+                    }, {
+                        username: "m557bDU3Benap-5d7xCv06usKdqxOnj3fftLNnlo3wBeXOFabXtRclzQabg9uT-YAAAAAGYJGThLaW1peWFzdQ==",
+                        credential: "66824fbc-ef35-11ee-8b68-0242ac120004",
+                        urls: [
+                            "turn:ntk-turn-2.xirsys.com:80?transport=udp",
+                            "turn:ntk-turn-2.xirsys.com:3478?transport=udp",
+                            "turn:ntk-turn-2.xirsys.com:80?transport=tcp",
+                            "turn:ntk-turn-2.xirsys.com:3478?transport=tcp",
+                            "turns:ntk-turn-2.xirsys.com:443?transport=tcp",
+                            "turns:ntk-turn-2.xirsys.com:5349?transport=tcp"
+                        ]
+                    }]
                 }
             });
 
@@ -181,28 +196,32 @@ const VideoChat = (props) => {
         functionVideoChat();
     }, [])
 
-
-
-    const playStop = (e) => {
-        const enabled = myVideoStream.getVideoTracks()[0].enabled;
-        if (enabled) {
-            myVideoStream.getVideoTracks()[0].enabled = false
-            //e.classList.add("active")
-            //myVideoStream.getVideoTracks()[0].enabled =  false
-        } else {
-            //e.classList.remove("active")
-            myVideoStream.getVideoTracks()[0].enabled = true
-        }
-    }
-
     const leaveVideo = (e) => {
+        if (myVideoStream) {
+            myVideoStream.getTracks().forEach(track => track.stop());
+        }
+
+        // 保存されているピアコネクションを閉じ、参照を削除
+        Object.keys(peers).forEach((userId) => {
+            if (peers[userId]) {
+                peers[userId].close();
+                delete peers[userId];
+            }
+        });
+
+        if (myPeer) {
+            myPeer.destroy();
+            myPeer = null;
+        }
         socket.disconnect();
-        myPeer.disconnect();
-        myPeer = null;
+        //myPeer.disconnect();
+        //myPeer = null;
         const videos = document.getElementsByTagName("video")
         for (let i = videos.length - 1; i >= 0; --i) {
             videos[i].remove();
         }
+
+        window.location.reload();
     }
 
     const videomanager = (e) => {
@@ -254,25 +273,29 @@ const VideoChat = (props) => {
         networkRef.current.classList.remove('network-error-area');
     }
 
-
     return (
         <div className='video-chat-area'>
-            <div ref={videoButtonRef} className='btn__action' onClick={videomanager}><FontAwesomeIcon icon={faVideo} bounce className='icon' /><p ref={buttonTextVideo} className='text_mute_status'>カメラオン</p></div>
-            <div ref={videoButtonNoneRef} className='btn__action' onClick={videomanager}><FontAwesomeIcon icon={faVideoSlash} className='icon' /><p ref={videoText} className='text_mute_status'>カメラオフ</p></div>
-            <div ref={buttonRef} className='btn__action' onClick={muteUnmute}><FontAwesomeIcon icon={faMicrophone} bounce className='icon' /><p ref={buttonTextAudio} className='text_mute_status'>通話中</p></div>
-            <div ref={buttonNoneRef} className='btn__action' onClick={muteUnmute}><FontAwesomeIcon icon={faMicrophoneSlash} className='icon' /><p ref={buttonText} className='text_mute_status'>ミュート中</p></div><br></br>
-
+            <div className='video-contoroll-area'>
+                <div ref={videoButtonRef} className='btn__action' onClick={videomanager}><FontAwesomeIcon icon={faVideo} bounce className='icon' /><p ref={buttonTextVideo} className='text_mute_status'>カメラオン</p></div>
+                <div ref={videoButtonNoneRef} className='btn__action' onClick={videomanager}><FontAwesomeIcon icon={faVideoSlash} className='icon' /><p ref={videoText} className='text_mute_status'>カメラオフ</p></div>
+                <div ref={buttonRef} className='btn__action' onClick={muteUnmute}><FontAwesomeIcon icon={faMicrophone} bounce className='icon' /><p ref={buttonTextAudio} className='text_mute_status'>通話中</p></div>
+                <div ref={buttonNoneRef} className='btn__action' onClick={muteUnmute}><FontAwesomeIcon icon={faMicrophoneSlash} className='icon' /><p ref={buttonText} className='text_mute_status'>ミュート中</p></div><br></br>
+            </div>
             <div className='video-chat-wrap'>
-                <div ref={videoUserName} id='video-user-name'></div>
-                <div ref={videoWeap} id='video-wrap'></div>
+                <div ref={videoUserName} className='video-user-name'></div>
+                <div ref={videoWeap} className='video-wrap'></div>
             </div>
 
             <div ref={networkRef} className='hide'>
                 <p>通信エラーが発生しました。</p>
                 <button onClick={networkErrorHide}>OK</button>
             </div>
+
+            <div className='quit-area'>
+                {/* 切断ボタンの追加 */}
+                <button onClick={leaveVideo} className='quite-btn'>退出</button>
+            </div>
         </div>
     )
 }
-
 export default VideoChat

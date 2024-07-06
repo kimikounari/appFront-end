@@ -1,0 +1,106 @@
+form {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+}
+
+small {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+
+form input {
+    display: block;
+    width: 500px;
+    margin: 20px auto;
+    height: 40px;
+}
+
+
+.check-box {
+    width: 100px !important;
+    height: 10px !important;
+}
+
+form small {
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.login-button,
+.signup-button {
+    display: block;
+    width: 300px;
+    margin: 10px auto;
+    height: 50px;
+    background-color: #7fba00;
+    color: white;
+    border: none;
+}
+
+.signup-redirect-text {
+    display: block;
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+    color: #7fba00;
+}
+
+.select-avatar-img {
+    display: block;
+    width: 160px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.avatar-select-area p {
+    text-align: center;
+}
+
+select {
+    display: block;
+    width: 200px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+
+.require-login-area {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    form {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    .login-button {
+        width: 150px;
+    }
+
+    .signup-redirect-text {
+        width: 150px;
+    }
+
+    .login-text-input,
+    .login-password-input {
+        width: 100%;
+    }
+}
+
+.check-box-accept {
+    width: 20px;
+    height: 20px;
+    text-align: left;
+    margin: 0px;
+}
+
+.accept-button {
+    display: block;
+}

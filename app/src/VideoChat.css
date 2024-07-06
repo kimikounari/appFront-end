@@ -1,0 +1,80 @@
+.video-contoroll-area {
+    display: flex;
+    width: 100%;
+}
+
+.btn__action {
+    display: block;
+    width: 50%;
+    color: white;
+}
+
+.icon {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+
+.text_mute_status {
+    text-align: center;
+    font-size: 20px;
+}
+
+.active_false {
+    display: none;
+}
+
+.video-chat-wrap {
+    width: 80%;
+    overflow-x: auto;
+}
+
+.video-user-name {
+    display: flex;
+    width: auto;
+}
+
+.video-wrap {
+    display: flex;
+}
+
+.user-logged-in {
+    color: white;
+}
+
+span {
+    display: block;
+    min-width: 300px;
+    height: 20px;
+    margin: 10px;
+    color: white;
+}
+
+video {
+    display: block;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+}
+
+.quit-area {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.quite-btn {
+    background-color: red;
+    border: none;
+    padding: 5px;
+    color: white;
+    width: 100px;
+    font-size: 25px;
+}
+
+
+@media (max-width: 600px) {
+    .video-chat-wrap {
+        width: 100%;
+    }
+}

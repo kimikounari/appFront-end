@@ -24,7 +24,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:prod": "set REACT_APP_CHAT_SOCKET_URL=https://trial-app-comu.onrender.com/chat && set REACT_APP_AUDIO_SOCKET_URL=https://trial-app-comu.onrender.com/audio_chat_socket && set REACT_APP_VIDEO_SOCKET_URL=https://trial-app-comu.onrender.com/video_chat_socket && set REACT_APP_SIGN_API_URL=https://django-login-yggs.onrender.com/api/users/ && set REACT_APP_TOKEN_API_URL=https://django-login-yggs.onrender.com/auth/ && set REACT_APP_LOGIN_API_URL_CER=https://django-login-yggs.onrender.com/api/myself/ && npm run build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
