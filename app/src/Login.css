@@ -74,6 +74,20 @@ select {
     width: 100%;
 }
 
+.signup-success-wrap {
+    width: 80%;
+    margin: 20px auto;
+
+}
+
+.signup-success-wrap p {
+    font-size: 25px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
 @media (max-width: 600px) {
     form {
         width: 80%;

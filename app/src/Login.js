@@ -40,6 +40,7 @@ const Login = ({ setLoginUserInfo }) => {
         setLoading(true);
         setServerResponseMessage('');
         setLogoDisplay(false);
+        setLoginAreaDisplay(prevState => !prevState);
         try {
             const response = await axios.post('https://django-login-yggs.onrender.com/api/users/', {
                 username: name,
@@ -60,7 +61,8 @@ const Login = ({ setLoginUserInfo }) => {
         }
         setName('');
         setPassword('');
-        setLoading(false);
+        //setLoading(false);
+
     };
 
     const handleRetrieve = async (e) => {
@@ -138,6 +140,7 @@ const Login = ({ setLoginUserInfo }) => {
     const togglePasswordVisibility = (e) => {
         setIsChecked(e.target.checked);
         setPasswordShown(!passwordShown);
+        //setLoading(prevState => !prevState)
     };
 
     const handleCheckboxChange = (event) => {
@@ -193,15 +196,14 @@ const Login = ({ setLoginUserInfo }) => {
                                     <option value="2">2のアバターを使用</option>
                                 </select>
                             </div>
-                            <p className={`${loading ? "communication-message" : "hide"}`}>サーバーに通信中...</p>
-                            <p className={`${serverResponeMessage ? "communication-message" : "hide"}`}>{serverResponeMessage}</p>
 
-                            <button type="submit" className={signupButtonHandle ? 'signup-button' : 'hide'}>アカウント作成</button>
+                            <button type="submit" className="signup-button">アカウント作成</button>
                             <a href='#' onClick={toggleSignupDisplay} className='signup-redirect-text'>ログインする</a>
 
                         </form>
 
                     </div>
+
                     <div className={`${signupDisplay ? "hide" : "login-area"}`}>
                         <form>
                             <input
@@ -235,6 +237,37 @@ const Login = ({ setLoginUserInfo }) => {
                         </form>
                     </div>
                 </div>
+            </div>
+
+            <div className={`${loading ? "signup-success-wrap" : "hide"}`}>
+                <p className="communication-message">{serverResponeMessage}</p>
+
+                <form>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="ユーザー名"
+                        className='login-text-input'
+                    />
+                    <input
+                        type={passwordShown ? 'text' : 'password'}
+                        value={loginPass}
+                        onChange={(e) => setLoginPass(e.target.value)}
+                        placeholder="Password"
+                        className='login-password-input'
+                    />
+                    <div className='passwor-chackbox-wrap'>
+                        <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onClick={togglePasswordVisibility}
+                            className='check-box'
+                        />
+                        <small className='passwor-chackbox-text'>{passwordShown ? 'パスワードを隠す' : 'パスワードを表示する'}</small>
+                    </div>
+                    <button type="submit" className='login-button' onClick={handleRetrieve}>ログイン</button>
+                </form>
             </div>
         </div>
     );
